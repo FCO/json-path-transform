@@ -66,7 +66,7 @@ multi jpt(%hash where .keys.none.&is-json-path, $data) is export {
 multi jpt(%hash, $data) is export {
 	my %ret;
 	for %hash.kv -> Str $key, $value {
-		if $key ~~ /'$'/ {
+		if $key.&is-json-path {
 			my ($jp, $jpkey) = $key.split: /\s* ":" \s*/;
 			my @items = jp-multi($jp, $data);
 			for @items -> $item {
